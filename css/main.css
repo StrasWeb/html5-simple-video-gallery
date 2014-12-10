@@ -1,0 +1,12 @@
+.html5_video_gallery_video {
+    display:inline-block;
+    min-width: 300px;
+}
+
+.html5_video_gallery_thumb {
+    min-height: 150px;
+}
+
+.entry-content .html5_video_gallery_title {
+    margin:0;
+}
