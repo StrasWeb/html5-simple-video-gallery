@@ -28,7 +28,7 @@ Author URI: https://strasweb.fr/
  * */
 function HTML5VideoGallery($atts)
 {
-    $posts = get_posts(array('category'=>$atts['cat']));
+    $posts = get_posts(array('category'=>$atts['cat'], 'posts_per_page'=>-1));
     foreach ($posts as $post) {
         $date = new DateTime($post->post_date);
         $duration = get_post_meta($post->ID, 'duration', true);
