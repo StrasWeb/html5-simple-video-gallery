@@ -58,7 +58,9 @@ function HTML5VideoGallery($atts)
  * */
 function HTML5VideoPost($atts)
 {
-    echo '<video controls src="'.$atts['url'].'"></video>';
+    $thumb_url = wp_get_attachment_image_src(get_post_thumbnail_id(), 'large');
+    echo '<video poster="'.$thumb_url[0].'"
+        controls src="'.$atts['url'].'"></video>';
 }
 
 add_shortcode(html5_video_gallery, 'HTML5VideoGallery');
