@@ -1,6 +1,7 @@
 .html5_video_gallery_video {
-    display:table-cell;
+    display:inline-block;
     padding-right:2em;
+    padding-bottom:2em;
 }
 
 .html5_video_gallery_info {
