@@ -69,6 +69,9 @@ function HTML5VideoPost($atts)
     $thumb_url = wp_get_attachment_image_src(get_post_thumbnail_id(), 'large');
     $duration = get_post_meta(get_the_ID(), 'duration', true);
     $author = get_post_meta(get_the_ID(), 'author', true);
+    if (isset($atts['title'])) {
+        echo '<h4 class="html5_video_gallery_title">', $atts['title'], '</h4>';
+    }
     echo '<video poster="'.$thumb_url[0].'"
         controls src="'.$atts['url'].'"></video>';
     if (!isset($atts['noinfo'])) {
