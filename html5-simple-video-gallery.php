@@ -32,11 +32,13 @@ function HTML5VideoGallery($atts)
     foreach ($posts as $post) {
         $date = new DateTime($post->post_date);
         $duration = get_post_meta($post->ID, 'duration', true);
+        $author = get_post_meta($post->ID, 'author', true);
         echo '<div class="html5_video_gallery_video">
             <a class="html5_video_gallery_link"
             href="'.get_permalink($post->ID).'">';
         echo '<div class="html5_video_gallery_thumb">',
             get_the_post_thumbnail($post->ID, 'medium'), '</div>';
+        echo '<div class="html5_video_gallery_info">';
         echo '<h4 class="html5_video_gallery_title">', $post->post_title;
         if (!empty($duration)) {
             echo ' <small>(',
@@ -44,8 +46,13 @@ function HTML5VideoGallery($atts)
                 ')</small>';
         }
         echo '</h4>';
+        if (!empty($author)) {
+            echo ' <div>',
+                get_post_meta($post->ID, 'author', true),
+                '</div>';
+        }
         echo '<div>', $date->format('d/m/Y'), '</div>';
-        echo '</a></div>';
+        echo '</a></div></div>';
     }
 }
 
