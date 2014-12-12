@@ -65,9 +65,25 @@ function HTML5VideoGallery($atts)
  * */
 function HTML5VideoPost($atts)
 {
+    $date = new DateTime(get_the_date('Ymd'));
     $thumb_url = wp_get_attachment_image_src(get_post_thumbnail_id(), 'large');
+    $duration = get_post_meta(get_the_ID(), 'duration', true);
+    $author = get_post_meta(get_the_ID(), 'author', true);
     echo '<video poster="'.$thumb_url[0].'"
         controls src="'.$atts['url'].'"></video>';
+    echo '<h4 class="html5_video_gallery_title">', get_the_title();
+    if (!empty($duration)) {
+        echo ' <small>(',
+            get_post_meta(get_the_ID(), 'duration', true),
+            ')</small>';
+    }
+    echo '</h4>';
+    if (!empty($author)) {
+        echo ' <div>',
+            get_post_meta(get_the_ID(), 'author', true),
+            '</div>';
+    }
+    echo '<div>', $date->format('d/m/Y'), '</div>';
 }
 
 add_shortcode(html5_video_gallery, 'HTML5VideoGallery');
