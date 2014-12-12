@@ -71,8 +71,14 @@ function HTML5VideoPost($atts)
     $author = get_post_meta(get_the_ID(), 'author', true);
     echo '<video poster="'.$thumb_url[0].'"
         controls src="'.$atts['url'].'"></video>';
-    if (!isset($atts['noinfo'])) {
+    if (isset($atts['title'])) {
+        echo '<h4 class="html5_video_gallery_title">', $atts['title'];
+    } else {
         echo '<h4 class="html5_video_gallery_title">', get_the_title();
+    }
+    if (isset($atts['noinfo'])) {
+        echo '</h4>';
+    } else {
         if (!empty($duration)) {
             echo ' <small>(',
                 get_post_meta(get_the_ID(), 'duration', true),
