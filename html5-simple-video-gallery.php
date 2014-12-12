@@ -71,19 +71,21 @@ function HTML5VideoPost($atts)
     $author = get_post_meta(get_the_ID(), 'author', true);
     echo '<video poster="'.$thumb_url[0].'"
         controls src="'.$atts['url'].'"></video>';
-    echo '<h4 class="html5_video_gallery_title">', get_the_title();
-    if (!empty($duration)) {
-        echo ' <small>(',
-            get_post_meta(get_the_ID(), 'duration', true),
-            ')</small>';
+    if (!isset($atts['noinfo'])) {
+        echo '<h4 class="html5_video_gallery_title">', get_the_title();
+        if (!empty($duration)) {
+            echo ' <small>(',
+                get_post_meta(get_the_ID(), 'duration', true),
+                ')</small>';
+        }
+        echo '</h4>';
+        if (!empty($author)) {
+            echo ' <div>',
+                get_post_meta(get_the_ID(), 'author', true),
+                '</div>';
+        }
+        echo '<div>', $date->format('d/m/Y'), '</div>';
     }
-    echo '</h4>';
-    if (!empty($author)) {
-        echo ' <div>',
-            get_post_meta(get_the_ID(), 'author', true),
-            '</div>';
-    }
-    echo '<div>', $date->format('d/m/Y'), '</div>';
 }
 
 add_shortcode(html5_video_gallery, 'HTML5VideoGallery');
