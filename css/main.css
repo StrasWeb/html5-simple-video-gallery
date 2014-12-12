@@ -1,10 +1,15 @@
 .html5_video_gallery_video {
-    display:inline-block;
+    display:table-cell;
     min-width: 300px;
+}
+
+.html5_video_gallery_info {
+    display:table-cell;
 }
 
 .html5_video_gallery_thumb {
     min-height: 150px;
+    display:table-cell;
 }
 
 .entry-content .html5_video_gallery_title {
