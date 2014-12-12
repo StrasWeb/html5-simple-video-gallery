@@ -37,7 +37,7 @@ function HTML5VideoGallery($atts)
             <a class="html5_video_gallery_link"
             href="'.get_permalink($post->ID).'">';
         echo '<div class="html5_video_gallery_thumb">',
-            get_the_post_thumbnail($post->ID, 'medium'), '</div>';
+            get_the_post_thumbnail($post->ID, array(300, 168)), '</div>';
         echo '<div class="html5_video_gallery_info">';
         echo '<h4 class="html5_video_gallery_title">', $post->post_title;
         if (!empty($duration)) {
