@@ -89,7 +89,7 @@ function HTML5VideoPost($atts)
         if (!empty($duration)) {
             echo '</span> <small>(<span itemprop="duration">',
                 get_post_meta(get_the_ID(), 'duration', true),
-                '</small>)</span>';
+                '</span>)</small>';
         }
         echo '</h4>';
         if (!empty($author)) {
