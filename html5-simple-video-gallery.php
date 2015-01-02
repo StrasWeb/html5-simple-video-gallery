@@ -103,8 +103,8 @@ function HTML5VideoPost($atts)
     echo '</div>';
 }
 
-add_shortcode(html5_video_gallery, 'HTML5VideoGallery');
-add_shortcode(html5_video_post, 'HTML5VideoPost');
+add_shortcode('html5_video_gallery', 'HTML5VideoGallery');
+add_shortcode('html5_video_post', 'HTML5VideoPost');
 wp_enqueue_style(
     'html5-simple-video-gallery',
     plugins_url('css/main.css', __FILE__)
