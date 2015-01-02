@@ -28,6 +28,10 @@ Author URI: https://strasweb.fr/
  * */
 function HTML5VideoGallery($atts)
 {
+    wp_enqueue_style(
+        'html5-simple-video-gallery',
+        plugins_url('css/main.css', __FILE__)
+    );
     $posts = get_posts(array('category'=>$atts['cat'], 'posts_per_page'=>-1));
     foreach ($posts as $post) {
         $date = new DateTime($post->post_date);
@@ -70,6 +74,10 @@ function HTML5VideoGallery($atts)
  * */
 function HTML5VideoPost($atts)
 {
+    wp_enqueue_style(
+        'html5-simple-video-gallery',
+        plugins_url('css/main.css', __FILE__)
+    );
     $date = new DateTime(get_the_date('Ymd'));
     $thumb_url = wp_get_attachment_image_src(get_post_thumbnail_id(), 'large');
     $duration = get_post_meta(get_the_ID(), 'duration', true);
@@ -105,8 +113,4 @@ function HTML5VideoPost($atts)
 
 add_shortcode('html5_video_gallery', 'HTML5VideoGallery');
 add_shortcode('html5_video_post', 'HTML5VideoPost');
-wp_enqueue_style(
-    'html5-simple-video-gallery',
-    plugins_url('css/main.css', __FILE__)
-);
 ?>
