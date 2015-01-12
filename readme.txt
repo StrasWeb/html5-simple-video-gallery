@@ -1,4 +1,4 @@
-=== Plugin Name ===
+=== HTML5 Simple Video Gallery ===
 Contributors: Rudloff
 Tags: video, gallery, html5
 Stable tag: 0.1
