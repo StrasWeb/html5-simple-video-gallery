@@ -82,33 +82,35 @@ function HTML5VideoPost($atts)
     $thumb_url = wp_get_attachment_image_src(get_post_thumbnail_id(), 'large');
     $duration = get_post_meta(get_the_ID(), 'duration', true);
     $author = get_post_meta(get_the_ID(), 'author', true);
-    echo '<div itemscope itemtype="http://schema.org/VideoObject">';
-    if (isset($atts['title'])) {
-        echo '<h4 itemprop="alternativeHeadline" class="html5_video_gallery_title">',
-            $atts['title'], '</h4>';
-    }
-    echo '<video itemprop="contentUrl" poster="'.$thumb_url[0].'"
-        controls src="'.$atts['url'].'">
-            <meta itemprop="image" content="'.$thumb_url[0].'" />
-        </video>';
-    if (!isset($atts['noinfo'])) {
-        echo '<h4 class="html5_video_gallery_title">
-            <span itemprop="name">', get_the_title();
-        if (!empty($duration)) {
-            echo '</span> <small>(<span itemprop="duration">',
-                get_post_meta(get_the_ID(), 'duration', true),
-                '</span>)</small>';
+    if (!is_feed()) {
+        echo '<div itemscope itemtype="http://schema.org/VideoObject">';
+        if (isset($atts['title'])) {
+            echo '<h4 itemprop="alternativeHeadline" class="html5_video_gallery_title">',
+                $atts['title'], '</h4>';
         }
-        echo '</h4>';
-        if (!empty($author)) {
-            echo ' <div itemprop="author">',
-                get_post_meta(get_the_ID(), 'author', true),
-                '</div>';
+        echo '<video itemprop="contentUrl" poster="'.$thumb_url[0].'"
+            controls src="'.$atts['url'].'">
+                <meta itemprop="image" content="'.$thumb_url[0].'" />
+            </video>';
+        if (!isset($atts['noinfo'])) {
+            echo '<h4 class="html5_video_gallery_title">
+                <span itemprop="name">', get_the_title();
+            if (!empty($duration)) {
+                echo '</span> <small>(<span itemprop="duration">',
+                    get_post_meta(get_the_ID(), 'duration', true),
+                    '</span>)</small>';
+            }
+            echo '</h4>';
+            if (!empty($author)) {
+                echo ' <div itemprop="author">',
+                    get_post_meta(get_the_ID(), 'author', true),
+                    '</div>';
+            }
+            echo '<div itemprop="dateCreated" content="'.$date->format('Y-m-d').'">',
+                $date->format('d/m/Y'), '</div>';
         }
-        echo '<div itemprop="dateCreated" content="'.$date->format('Y-m-d').'">',
-            $date->format('d/m/Y'), '</div>';
+        echo '</div>';
     }
-    echo '</div>';
 }
 
 add_shortcode('html5_video_gallery', 'HTML5VideoGallery');
