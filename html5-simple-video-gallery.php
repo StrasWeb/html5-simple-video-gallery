@@ -33,36 +33,38 @@ function HTML5VideoGallery($atts)
         plugins_url('css/main.css', __FILE__)
     );
     $posts = get_posts(array('category'=>$atts['cat'], 'posts_per_page'=>-1));
+    $html = '';
     foreach ($posts as $post) {
         $date = new DateTime($post->post_date);
         $duration = get_post_meta($post->ID, 'duration', true);
         $author = get_post_meta($post->ID, 'author', true);
-        echo '<div class="html5_video_gallery_video"
+        $html .= '<div class="html5_video_gallery_video"
             itemscope itemtype="http://schema.org/VideoObject">
                 <a class="html5_video_gallery_link" itemprop="url"
                 href="'.get_permalink($post->ID).'">';
-        echo '<div class="html5_video_gallery_thumb">',
+        $html .= '<div class="html5_video_gallery_thumb">'.
             get_the_post_thumbnail(
                 $post->ID, 'thumbnail', array('itemprop'=>'thumbnail')
-            ), '</div>';
-        echo '<div class="html5_video_gallery_info">';
-        echo '<h4 class="html5_video_gallery_title" itemprop="name">',
+            ).'</div>';
+        $html .= '<div class="html5_video_gallery_info">';
+        $html .= '<h4 class="html5_video_gallery_title" itemprop="name">'.
             $post->post_title;
         if (!empty($duration)) {
-            echo ' <small>(<span itemprop="duration">',
-                get_post_meta($post->ID, 'duration', true),
+            $html .= ' <small>(<span itemprop="duration">'.
+                get_post_meta($post->ID, 'duration', true).
                 '</span>)</small>';
         }
-        echo '</h4>';
+        $html .= '</h4>';
         if (!empty($author)) {
-            echo ' <div itemprop="author">',
-                get_post_meta($post->ID, 'author', true),
+            $html .= ' <div itemprop="author">'.
+                get_post_meta($post->ID, 'author', true).
                 '</div>';
         }
-        echo '<div itemprop="dateCreated" content="'.$date->format('Y-m-d').'">',
-            $date->format('d/m/Y'), '</div>';
-        echo '</a></div></div>';
+        $html .= '<div itemprop="dateCreated" content="'.$date->format('Y-m-d').'">'.
+            $date->format('d/m/Y').'</div>';
+        $html .= '</a></div></div>';
     }
+    return $html;
 }
 
 /**
@@ -82,35 +84,35 @@ function HTML5VideoPost($atts)
     $thumb_url = wp_get_attachment_image_src(get_post_thumbnail_id(), 'large');
     $duration = get_post_meta(get_the_ID(), 'duration', true);
     $author = get_post_meta(get_the_ID(), 'author', true);
-    if (!is_feed()) {
-        echo '<div itemscope itemtype="http://schema.org/VideoObject">';
-        if (isset($atts['title'])) {
-            echo '<h4 itemprop="alternativeHeadline" class="html5_video_gallery_title">',
-                $atts['title'], '</h4>';
-        }
-        echo '<video itemprop="contentUrl" poster="'.$thumb_url[0].'"
-            controls src="'.$atts['url'].'">
-                <meta itemprop="image" content="'.$thumb_url[0].'" />
-            </video>';
-        if (!isset($atts['noinfo'])) {
-            echo '<h4 class="html5_video_gallery_title">
-                <span itemprop="name">', get_the_title();
-            if (!empty($duration)) {
-                echo '</span> <small>(<span itemprop="duration">',
-                    get_post_meta(get_the_ID(), 'duration', true),
-                    '</span>)</small>';
-            }
-            echo '</h4>';
-            if (!empty($author)) {
-                echo ' <div itemprop="author">',
-                    get_post_meta(get_the_ID(), 'author', true),
-                    '</div>';
-            }
-            echo '<div itemprop="dateCreated" content="'.$date->format('Y-m-d').'">',
-                $date->format('d/m/Y'), '</div>';
-        }
-        echo '</div>';
+    $html = '<div itemscope itemtype="http://schema.org/VideoObject">';
+    if (isset($atts['title'])) {
+        $html .= '<h4 itemprop="alternativeHeadline"
+            class="html5_video_gallery_title">'.
+            $atts['title'].'</h4>';
     }
+    $html .= '<video itemprop="contentUrl" poster="'.$thumb_url[0].'"
+        controls src="'.$atts['url'].'">
+            <meta itemprop="image" content="'.$thumb_url[0].'" />
+        </video>';
+    if (!isset($atts['noinfo'])) {
+        $html .= '<h4 class="html5_video_gallery_title">
+            <span itemprop="name">'.get_the_title();
+        if (!empty($duration)) {
+            $html .= '</span> <small>(<span itemprop="duration">'.
+                get_post_meta(get_the_ID(), 'duration', true).
+                '</span>)</small>';
+        }
+        $html .= '</h4>';
+        if (!empty($author)) {
+            $html .= ' <div itemprop="author">'.
+                get_post_meta(get_the_ID(), 'author', true).
+                '</div>';
+        }
+        $html .= '<div itemprop="dateCreated" content="'.$date->format('Y-m-d').'">'.
+            $date->format('d/m/Y').'</div>';
+    }
+    $html .= '</div>';
+    return $html;
 }
 
 add_shortcode('html5_video_gallery', 'HTML5VideoGallery');
